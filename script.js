@@ -47,16 +47,28 @@ function turnDown(card) {
 
 
 let firstCardTurned = false;
+let secondCardTurned = false;
 let firstCard;
+let secondCard;
+
+function resetChoice(card) {
+    turnDown(card);
+    turnDown(firstCard);
+    secondCardTurned = !secondCardTurned;
+    firstCard = "";
+}
 
 function choice(card) {
+    if (card === firstCard || secondCardTurned) {
+        return;
+    }
+    turnUp(card);
     if (firstCardTurned) {
-        setTimeout(turnDown, 1000, card);
-        setTimeout(turnDown, 1000, firstCard);
+        secondCardTurned = !secondCardTurned;
+        setTimeout(resetChoice, 1000, card);
     } else {
         firstCard = card;
     }
-    turnUp(card);
     
     firstCardTurned = !firstCardTurned;
 }
