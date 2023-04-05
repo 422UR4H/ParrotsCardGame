@@ -59,12 +59,22 @@ img {
     transform: rotateY(180deg);
 }
 
+/*
+.card:hover .front-face {
+    transform: rotateY(-180deg);
+}
+
 .card:hover .back-face {
     transform: rotateY(0deg);
 }
+*/
 
-.card:hover .front-face {
+.turn180 {
     transform: rotateY(-180deg);
+}
+
+.turn0 {
+    transform: rotateY(0deg);
 }
 
 .hidden {
