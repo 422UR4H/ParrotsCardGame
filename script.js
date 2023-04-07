@@ -45,11 +45,26 @@ function turnDown(card) {
     back.classList.remove('turn0');
 }
 
+function isTurnedUp(card) {
+    let front = card.querySelector('.front-face');
+    return front.classList.contains('turn180');
+}
+
 
 let firstCardTurned = false;
 let secondCardTurned = false;
 let firstCard;
 let secondCard;
+
+function checkEquality(firstCard, secondCard) {
+    firstImg = firstCard.querySelector('.back-face').innerHTML;
+    secondImg = secondCard.querySelector('.back-face').innerHTML;
+
+    if (firstImg === secondImg) {
+        return true;
+    }
+    return false;
+}
 
 function resetChoice(card) {
     turnDown(card);
@@ -58,12 +73,19 @@ function resetChoice(card) {
     firstCard = "";
 }
 
-function choice(card) {
-    if (card === firstCard || secondCardTurned) {
+function flip(card) {
+    if (isTurnedUp(card) || secondCardTurned) {
         return;
     }
+
     turnUp(card);
     if (firstCardTurned) {
+        if (checkEquality(firstCard, card)) {
+            firstCardTurned = !firstCardTurned;
+            firstCard = "";
+            return;
+        }
+
         secondCardTurned = !secondCardTurned;
         setTimeout(resetChoice, 1000, card);
     } else {

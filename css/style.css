@@ -79,3 +79,8 @@ img {
 .hidden {
     display: none;
 }
+
+.card:disabled {
+    background-color: red;
+    border-radius: 100%;
+}
