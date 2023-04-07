@@ -8,6 +8,13 @@ function authAmount(amount) {
     return (amountCards < 4 || amountCards > 14 || (amountCards % 2) === 1 || isNaN(amountCards));
 }
 
+let timer = 0;
+function setTimer() {
+    document.querySelector('h2').innerHTML = ++timer;
+}
+
+let idInterval = setInterval(setTimer, 1000);
+
 const cardList = [];
 for (let i = 0; i < amountCards; i++) {
     let card = document.querySelector(".table .hidden");
@@ -88,9 +95,10 @@ function flip(card) {
             firstCardTurned = !firstCardTurned;
             firstCard = "";
 
-            if(flippedCards >= amountCards) {
+            if(flippedCards >= amountCards) { // game over
                 // setTimeout para dar tempo da carta virar antes de emitir a mensagem final
-                setTimeout(alert, 100, `Você ganhou em ${flips} jogadas!`);
+                setTimeout(alert, 100, `Você ganhou em ${flips} jogadas! A duração do jogo foi de ${timer} segundos!`);
+                clearInterval(idInterval);
             }
             return;
         }

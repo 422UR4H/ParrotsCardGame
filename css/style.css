@@ -15,6 +15,17 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    color: #75B79E;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 42.19px;
+
+    position: fixed;
+    top: 16px;
+    right: 18px;
+}
+
 img {
     width: 100px;
 }
