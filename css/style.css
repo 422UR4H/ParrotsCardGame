@@ -9,6 +9,7 @@ h1 {
     font-weight: 700;
     line-height: 65.63px;
 
+    width: 100%;
     margin-top: 45px;
     
     text-align: center;
@@ -80,7 +81,22 @@ img {
     display: none;
 }
 
-.card:disabled {
-    background-color: red;
-    border-radius: 100%;
+
+@media (max-width: 906px) {
+    .table {
+        width: 100%;
+    }
+}
+
+@media (max-width: 335px) {
+    h1 {
+        font-size: 36px;
+        line-height: 42.19px;
+    }
+
+    .table {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
 }

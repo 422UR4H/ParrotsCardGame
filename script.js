@@ -1,3 +1,4 @@
+let flippedCards = 0;
 let amountCards;
 do {
     amountCards = Number(prompt("Com quantas cartas quer jogar? (insira um valor par, de 4 a 14)"));
@@ -29,12 +30,15 @@ let table = document.querySelector(".table");
 table.innerHTML = HTMLTable;
 
 
+let flips = 0;
 function turnUp(card) {
     let front = card.querySelector('.front-face');
     front.classList.add('turn180');
 
     let back = card.querySelector('.back-face');
     back.classList.add('turn0');
+
+    flips++;
 }
 
 function turnDown(card) {
@@ -54,7 +58,6 @@ function isTurnedUp(card) {
 let firstCardTurned = false;
 let secondCardTurned = false;
 let firstCard;
-let secondCard;
 
 function checkEquality(firstCard, secondCard) {
     firstImg = firstCard.querySelector('.back-face').innerHTML;
@@ -66,7 +69,7 @@ function checkEquality(firstCard, secondCard) {
     return false;
 }
 
-function resetChoice(card) {
+function resetFlip(card) {
     turnDown(card);
     turnDown(firstCard);
     secondCardTurned = !secondCardTurned;
@@ -81,13 +84,19 @@ function flip(card) {
     turnUp(card);
     if (firstCardTurned) {
         if (checkEquality(firstCard, card)) {
+            flippedCards += 2;
             firstCardTurned = !firstCardTurned;
             firstCard = "";
+
+            if(flippedCards >= amountCards) {
+                // setTimeout para dar tempo da carta virar antes de emitir a mensagem final
+                setTimeout(alert, 100, `Você ganhou em ${flips} jogadas!`);
+            }
             return;
         }
 
         secondCardTurned = !secondCardTurned;
-        setTimeout(resetChoice, 1000, card);
+        setTimeout(resetFlip, 1000, card);
     } else {
         firstCard = card;
     }
