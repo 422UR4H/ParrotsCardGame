@@ -16,20 +16,22 @@ const gifs = [
     'tripletsparrot',
     'unicornparrot'
 ];
+const amountMin = 4;
+const amountMax = 14;
 
 
 // build functions
 
-function authAmount(amount) {
-    return (amountCards < 4 || amountCards > 14 || (amountCards % 2) === 1 || isNaN(amountCards));
+function authAmount(amountCards) {
+    return (amountCards < amountMin || amountCards > amountMax || (amountCards % 2) === 1 || isNaN(amountCards));
 }
 
 function setTimer() {
     document.querySelector('h2').innerHTML = ++timer;
 }
 
-function comparador() { 
-	return Math.random() - 0.5; 
+function comparator() {
+    return Math.random() - 0.5;
 }
 
 function init() {
@@ -44,9 +46,9 @@ function init() {
     do {
         amountCards = Number(prompt("Com quantas cartas quer jogar? (insira um valor par, de 4 a 14)"));
     } while (authAmount(amountCards));
-    
+
     for (let i = 0; i < amountCards / 2; i++) {
-        let card = `<div class="card" onclick="flip(this)" data-test="card">
+        const card = `<div class="card" onclick="flip(this)" data-test="card">
                         <div class="front-face face">
                             <img src="./images/back.png" alt="carta virada para baixo" data-test="face-down-image">
                         </div>
@@ -54,18 +56,17 @@ function init() {
                             <img src="./images/${gifs[i]}.gif" alt="${gifs[i]}" data-test="face-up-image">
                         </div>
                     </div>`;
-    
+
         cardList.push(card);
         cardList.push(card);
     }
-    cardList.sort(comparador);
+    cardList.sort(comparator);
 
     let HTMLTable = "";
     for (let i = 0; i < amountCards; i++) {
-        HTMLTable += cardList[i];   
+        HTMLTable += cardList[i];
     }
-    let table = document.querySelector(".table");
-    table.innerHTML = HTMLTable;
+    document.querySelector(".table").innerHTML = HTMLTable;
 
     idInterval = setInterval(setTimer, 1000);
 }
@@ -73,31 +74,31 @@ function init() {
 // flip\turn functions
 
 function turnUp(card) {
-    let front = card.querySelector('.front-face');
+    const front = card.querySelector('.front-face');
     front.classList.add('turn180');
 
-    let back = card.querySelector('.back-face');
+    const back = card.querySelector('.back-face');
     back.classList.add('turn0');
 
     flips++;
 }
 
 function turnDown(card) {
-    let front = card.querySelector('.front-face');
+    const front = card.querySelector('.front-face');
     front.classList.remove('turn180');
 
-    let back = card.querySelector('.back-face');
+    const back = card.querySelector('.back-face');
     back.classList.remove('turn0');
 }
 
 function isTurnedUp(card) {
-    let front = card.querySelector('.front-face');
+    const front = card.querySelector('.front-face');
     return front.classList.contains('turn180');
 }
 
-function checkEquality(firstCard, secondCard) {
-    firstImg = firstCard.querySelector('.back-face').innerHTML;
-    secondImg = secondCard.querySelector('.back-face').innerHTML;
+function checkEquality(card1, card2) {
+    const firstImg = card1.querySelector('.back-face').innerHTML;
+    const secondImg = card2.querySelector('.back-face').innerHTML;
 
     if (firstImg === secondImg) {
         return true;
@@ -113,8 +114,9 @@ function resetFlip(card) {
 }
 
 function endMsgs() {
-    alert(`Você ganhou em ${flips} jogadas! A duração do jogo foi de ${timer} segundos!`);
     let answer;
+
+    alert(`Você ganhou em ${flips} jogadas! A duração do jogo foi de ${timer} segundos!`);
     do {
         answer = prompt('Você gostaria de reiniciar a partida? (sim ou não)');
     } while (answer !== 'sim' && answer !== 'não');
@@ -150,7 +152,7 @@ function flip(card) {
     } else {
         firstCard = card;
     }
-    
+
     firstCardTurned = !firstCardTurned;
 }
 
