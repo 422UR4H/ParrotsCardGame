@@ -70,16 +70,6 @@ img {
     transform: rotateY(180deg);
 }
 
-/*
-.card:hover .front-face {
-    transform: rotateY(-180deg);
-}
-
-.card:hover .back-face {
-    transform: rotateY(0deg);
-}
-*/
-
 .turn180 {
     transform: rotateY(-180deg);
 }

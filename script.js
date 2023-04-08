@@ -1,43 +1,77 @@
-let flippedCards = 0;
+let flippedCards;
+let timer;
+let flips;
+let firstCardTurned;
+let secondCardTurned;
+let firstCard;
 let amountCards;
-do {
-    amountCards = Number(prompt("Com quantas cartas quer jogar? (insira um valor par, de 4 a 14)"));
-} while (authAmount(amountCards));
+let idInterval;
+let cardList = [];
+const gifs = [
+    'bobrossparrot',
+    'explodyparrot',
+    'fiestaparrot',
+    'metalparrot',
+    'revertitparrot',
+    'tripletsparrot',
+    'unicornparrot'
+];
+
+
+// build functions
 
 function authAmount(amount) {
     return (amountCards < 4 || amountCards > 14 || (amountCards % 2) === 1 || isNaN(amountCards));
 }
 
-let timer = 0;
 function setTimer() {
     document.querySelector('h2').innerHTML = ++timer;
-}
-
-let idInterval = setInterval(setTimer, 1000);
-
-const cardList = [];
-for (let i = 0; i < amountCards; i++) {
-    let card = document.querySelector(".table .hidden");
-    card.classList.remove("hidden");
-    cardList.push(card.outerHTML);
 }
 
 function comparador() { 
 	return Math.random() - 0.5; 
 }
-cardList.sort(comparador);
 
-let HTMLTable = "";
-for (let i = 0; i < amountCards; i++) {
-    HTMLTable += cardList[i];
+function init() {
+    flippedCards = 0;
+    timer = 0;
+    flips = 0;
+    firstCardTurned = false;
+    secondCardTurned = false;
+    firstCard = "";
+    cardList = [];
+
+    do {
+        amountCards = Number(prompt("Com quantas cartas quer jogar? (insira um valor par, de 4 a 14)"));
+    } while (authAmount(amountCards));
     
+    for (let i = 0; i < amountCards / 2; i++) {
+        let card = `<div class="card" onclick="flip(this)">
+                        <div class="front-face face">
+                            <img src="./images/back.png" alt="carta virada para baixo">
+                        </div>
+                        <div class="back-face face">
+                            <img src="./images/${gifs[i]}.gif" alt="${gifs[i]}">
+                        </div>
+                    </div>`;
+    
+        cardList.push(card);
+        cardList.push(card);
+    }
+    cardList.sort(comparador);
+
+    let HTMLTable = "";
+    for (let i = 0; i < amountCards; i++) {
+        HTMLTable += cardList[i];   
+    }
+    let table = document.querySelector(".table");
+    table.innerHTML = HTMLTable;
+
+    idInterval = setInterval(setTimer, 1000);
 }
 
-let table = document.querySelector(".table");
-table.innerHTML = HTMLTable;
+// flip\turn functions
 
-
-let flips = 0;
 function turnUp(card) {
     let front = card.querySelector('.front-face');
     front.classList.add('turn180');
@@ -61,11 +95,6 @@ function isTurnedUp(card) {
     return front.classList.contains('turn180');
 }
 
-
-let firstCardTurned = false;
-let secondCardTurned = false;
-let firstCard;
-
 function checkEquality(firstCard, secondCard) {
     firstImg = firstCard.querySelector('.back-face').innerHTML;
     secondImg = secondCard.querySelector('.back-face').innerHTML;
@@ -83,6 +112,19 @@ function resetFlip(card) {
     firstCard = "";
 }
 
+function endMsgs() {
+    alert(`Você ganhou em ${flips} jogadas! A duração do jogo foi de ${timer} segundos!`);
+    let answer;
+    do {
+        answer = prompt('Gostaria de reiniciar a partida? (responda com "sim" ou "não")');
+    } while (answer !== 'sim' && answer !== 'não');
+
+    if (answer === 'sim') {
+        document.querySelector('h2').innerHTML = '0';
+        init();
+    }
+}
+
 function flip(card) {
     if (isTurnedUp(card) || secondCardTurned) {
         return;
@@ -97,7 +139,7 @@ function flip(card) {
 
             if(flippedCards >= amountCards) { // game over
                 // setTimeout para dar tempo da carta virar antes de emitir a mensagem final
-                setTimeout(alert, 100, `Você ganhou em ${flips} jogadas! A duração do jogo foi de ${timer} segundos!`);
+                setTimeout(endMsgs, 100);
                 clearInterval(idInterval);
             }
             return;
@@ -111,3 +153,8 @@ function flip(card) {
     
     firstCardTurned = !firstCardTurned;
 }
+
+
+// execution of functions
+
+init();
