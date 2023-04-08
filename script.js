@@ -46,12 +46,12 @@ function init() {
     } while (authAmount(amountCards));
     
     for (let i = 0; i < amountCards / 2; i++) {
-        let card = `<div class="card" onclick="flip(this)">
+        let card = `<div class="card" onclick="flip(this)" data-test="card">
                         <div class="front-face face">
-                            <img src="./images/back.png" alt="carta virada para baixo">
+                            <img src="./images/back.png" alt="carta virada para baixo" data-test="face-down-image">
                         </div>
                         <div class="back-face face">
-                            <img src="./images/${gifs[i]}.gif" alt="${gifs[i]}">
+                            <img src="./images/${gifs[i]}.gif" alt="${gifs[i]}" data-test="face-up-image">
                         </div>
                     </div>`;
     
