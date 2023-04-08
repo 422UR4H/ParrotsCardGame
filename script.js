@@ -116,7 +116,7 @@ function endMsgs() {
     alert(`Você ganhou em ${flips} jogadas! A duração do jogo foi de ${timer} segundos!`);
     let answer;
     do {
-        answer = prompt('Gostaria de reiniciar a partida? (responda com "sim" ou "não")');
+        answer = prompt('Você gostaria de reiniciar a partida? (sim ou não)');
     } while (answer !== 'sim' && answer !== 'não');
 
     if (answer === 'sim') {
