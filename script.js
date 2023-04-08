@@ -16,14 +16,16 @@ const gifs = [
     'tripletsparrot',
     'unicornparrot'
 ];
+const frontFace = '.front-face';
+const backFace = '.back-face';
 const amountMin = 4;
 const amountMax = 14;
 
 
 // build functions
 
-function authAmount(amountCards) {
-    return (amountCards < amountMin || amountCards > amountMax || (amountCards % 2) === 1 || isNaN(amountCards));
+function authAmount(cards) {
+    return (cards < amountMin || cards > amountMax || (cards % 2) === 1 || isNaN(cards));
 }
 
 function setTimer() {
@@ -74,31 +76,31 @@ function init() {
 // flip\turn functions
 
 function turnUp(card) {
-    const front = card.querySelector('.front-face');
+    const front = card.querySelector(frontFace);
     front.classList.add('turn180');
 
-    const back = card.querySelector('.back-face');
+    const back = card.querySelector(backFace);
     back.classList.add('turn0');
 
     flips++;
 }
 
 function turnDown(card) {
-    const front = card.querySelector('.front-face');
+    const front = card.querySelector(frontFace);
     front.classList.remove('turn180');
 
-    const back = card.querySelector('.back-face');
+    const back = card.querySelector(backFace);
     back.classList.remove('turn0');
 }
 
 function isTurnedUp(card) {
-    const front = card.querySelector('.front-face');
+    const front = card.querySelector(frontFace);
     return front.classList.contains('turn180');
 }
 
 function checkEquality(card1, card2) {
-    const firstImg = card1.querySelector('.back-face').innerHTML;
-    const secondImg = card2.querySelector('.back-face').innerHTML;
+    const firstImg = card1.querySelector(backFace).innerHTML;
+    const secondImg = card2.querySelector(backFace).innerHTML;
 
     if (firstImg === secondImg) {
         return true;
